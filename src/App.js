@@ -1,15 +1,19 @@
 import "./App.css";
 import MainComponent from "./components/MainComponent";
-// import SearchYT from "./components/SearchYT";
-// import YoutubeApi from "./components/YoutubeApi";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SingleCard from "./components/SingleCard";
+import { useSelector } from "react-redux";
 
 function App() {
+  const Results = useSelector((state) => state.allResults.results);
+
   return (
-    <div className="App">
-      {/* <YoutubeApi /> */}
-      {/* <SearchYT /> */}
-      <MainComponent />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainComponent />}></Route>
+        <Route path="/cardclick" element={<SingleCard props={Results} />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

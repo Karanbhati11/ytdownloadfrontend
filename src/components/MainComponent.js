@@ -6,6 +6,8 @@ const MainComponent = () => {
   const [Params, setParams] = useState("");
   const [YoutubeURL, setYoutubeURL] = useState(false);
   const [SearchID, setSearchID] = useState(false);
+  const [Flag, setFlag] = useState(false);
+
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (Params === "") {
@@ -13,6 +15,7 @@ const MainComponent = () => {
     } else if (Params.includes("youtube")) {
       setYoutubeURL(true);
     } else {
+      setFlag(!Flag);
       setSearchID(true);
     }
   };
@@ -30,6 +33,7 @@ const MainComponent = () => {
           style={{ width: "50vw" }}
           className="form-control"
           onChange={(e) => setParams(e.target.value)}
+          placeholder="Search or Enter URL"
           value={Params}
         />
         <button
@@ -40,7 +44,11 @@ const MainComponent = () => {
           Submit
         </button>
       </div>
-      {SearchID && <SearchYT Keyword={Params} />}
+      {SearchID && (
+        <div>
+          <SearchYT Keyword={Params} para={{ Flag: Flag }} />
+        </div>
+      )}
       {YoutubeURL && <YoutubeApi Params={Params} />}
     </React.Fragment>
   );

@@ -1,14 +1,27 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import DownloadComponent from "./DownloadComponent";
 import ReactLoading from "react-loading";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resultAction } from "../redux/actions/ResultActions";
 
-const SearchYT = ({ Keyword }) => {
+const SearchYT = ({ Keyword, Submit, para }) => {
   const URL = "https://ytdownloadbackend.netlify.app/download";
+  const [Keynumber, setKeynumber] = useState(1);
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [flag, setFlag] = useState(para.Flag);
   const SearchURL =
     "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults";
-  const API_KEY = "AIzaSyCHTfN6PwhBVOE1JGHh1fLFskP0-W2EGtk";
-  const MaxResults = 5;
+  const API_KEY1 = "AIzaSyCHTfN6PwhBVOE1JGHh1fLFskP0-W2EGtk";
+  const API_KEY2 = "AIzaSyBWJk1BqO7Wd36mSJk2PSIgx4H2Pm4NMHs";
+  const API_KEY3 = "AIzaSyCoI8TWaoz2aZwe_T8FmmZgotKAKWH3ndg";
+  const API_KEY4 = "AIzaSyAVDvfHJElsfWGMrKcZCX5uQ_LIQcd4HRA";
+  const MaxResults = 20;
+  const NumberofKeys = 4;
+  const [Key, setKey] = useState(API_KEY1);
   //   const [Search, setSearch] = useState("");
   const [Results, setResults] = useState([]);
   const [Loading, setLoading] = useState(false);
@@ -23,24 +36,43 @@ const SearchYT = ({ Keyword }) => {
   //         setResults(res.data.items);
   //       });
   //   };
-
+  // console.log(Submit);
+  // console.log("ONCLICK", flag);
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${SearchURL}=${MaxResults}&q=${Keyword}&type=video&key=${API_KEY}`)
+      .get(`${SearchURL}=${MaxResults}&q=${Keyword}&type=video&key=${Key}`)
       .then((res) => {
-        console.log(res.data.items);
+        // console.log(res.data.items);
         setResults(res.data.items);
         setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+
+        if (Keynumber < NumberofKeys) {
+          setKeynumber(Keynumber + 1);
+          // eslint-disable-next-line no-eval
+          setKey(eval("API_KEY" + Keynumber));
+        } else {
+          console.log("MAXIMUM_SEARCH_LIMIT_REACHED");
+        }
       });
-  }, [Keyword]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [para.Flag]);
+
   const CardClick = (e) => {
     setDownloader({ info: [] });
-    axios.get(`${URL}?url=https://www.youtube.com/watch?v=${e}`).then((res) => {
-      console.log(res.data);
-      setDownloader(res.data);
-      setIsCardClicked(true);
-    });
+    axios
+      .get(`${URL}?url=https://www.youtube.com/watch?v=${e.id.videoId}`)
+      .then((res) => {
+        // console.log(res.data);
+        setDownloader(res.data);
+        dispatch(resultAction({ MyData: res.data, Card: e }));
+        // setIsCardClicked(true);
+        let path = `/cardclick`;
+        navigate(path);
+      });
   };
   return (
     <React.Fragment>
@@ -66,21 +98,29 @@ const SearchYT = ({ Keyword }) => {
         </div>
       )}
       {!Loading && (
-        <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "stretch",
+          }}
+        >
           {Results.map((items) => {
             return (
               <div
-                class="card"
+                className="card"
                 style={{ width: "18rem", margin: "5px" }}
-                onClick={() => CardClick(items.id.videoId)}
+                onClick={() => CardClick(items)}
               >
                 <img
-                  class="card-img-top"
+                  className="card-img-top"
                   src={items.snippet.thumbnails.default.url}
                   alt="Card im"
                 />
-                <div class="card-body">
-                  <p class="card-text">{items.snippet.title}</p>
+                <div className="card-body">
+                  <p className="card-text">{items.snippet.title}</p>
                 </div>
               </div>
             );
