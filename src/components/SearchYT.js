@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resultAction } from "../redux/actions/ResultActions";
 
-const SearchYT = ({ Keyword, Submit, para }) => {
+const SearchYT = ({ Keyword, para }) => {
   const URL = "https://ytdownloadbackend.netlify.app/download";
   const [Keynumber, setKeynumber] = useState(1);
   let navigate = useNavigate();
@@ -23,6 +23,11 @@ const SearchYT = ({ Keyword, Submit, para }) => {
   const NumberofKeys = 4;
   const [Key, setKey] = useState(API_KEY1);
   //   const [Search, setSearch] = useState("");
+  // const [Results, setResults] = useState(
+  //   JSON.parse(sessionStorage.getItem("Data"))
+  //     ? JSON.parse(sessionStorage.getItem("Data"))
+  //     : []
+  // );
   const [Results, setResults] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [Downloader, setDownloader] = useState([]);
@@ -38,6 +43,7 @@ const SearchYT = ({ Keyword, Submit, para }) => {
   //   };
   // console.log(Submit);
   // console.log("ONCLICK", flag);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -48,21 +54,22 @@ const SearchYT = ({ Keyword, Submit, para }) => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
-
+        // console.log(error);
         if (Keynumber < NumberofKeys) {
           setKeynumber(Keynumber + 1);
+          var a = Keynumber + 1;
           // eslint-disable-next-line no-eval
-          setKey(eval("API_KEY" + Keynumber));
+          setKey(eval("API_KEY" + a));
         } else {
           console.log("MAXIMUM_SEARCH_LIMIT_REACHED");
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [para.Flag]);
+  }, [para.Flag, Keynumber]);
 
   const CardClick = (e) => {
     setDownloader({ info: [] });
+    // sessionStorage.setItem("Data", JSON.stringify(Results));
     axios
       .get(`${URL}?url=https://www.youtube.com/watch?v=${e.id.videoId}`)
       .then((res) => {
@@ -110,13 +117,14 @@ const SearchYT = ({ Keyword, Submit, para }) => {
           {Results.map((items) => {
             return (
               <div
+                key={Math.random() * 456456465}
                 className="card"
                 style={{ width: "18rem", margin: "5px" }}
                 onClick={() => CardClick(items)}
               >
                 <img
                   className="card-img-top"
-                  src={items.snippet.thumbnails.default.url}
+                  src={items.snippet.thumbnails.medium.url}
                   alt="Card im"
                 />
                 <div className="card-body">
@@ -129,7 +137,9 @@ const SearchYT = ({ Keyword, Submit, para }) => {
       )}
       {IsCardClicked &&
         Downloader.info.map((items) => {
-          return <DownloadComponent key={Downloader.url} items={items} />;
+          return (
+            <DownloadComponent key={Math.random() * 87987} items={items} />
+          );
         })}
     </React.Fragment>
   );

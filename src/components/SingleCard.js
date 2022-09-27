@@ -37,9 +37,10 @@ const SingleCard = ({ props }) => {
           }}
         >
           {props.MyData.info.map((items) => {
-            return <DownloadComponent key={props.MyData.url} items={items} />;
+            return (
+              <DownloadComponent key={Math.random() * 87987} items={items} />
+            );
           })}
-          ;
         </div>
       </div>
     </React.Fragment>
