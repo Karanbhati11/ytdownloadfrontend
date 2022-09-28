@@ -1,0 +1,14 @@
+.rhap_container {
+    background-color: rgb(255, 255, 255);
+    box-shadow: none;
+}
+
+.rhap_container,
+.rhap_container *:focus {
+    outline: none;
+}
+
+.rhap_container svg {
+    color: rgb(0, 0, 0);
+
+}

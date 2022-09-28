@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import SearchYT from "./SearchYT";
 import YoutubeApi from "./YoutubeApi";
+import { useNavigate } from "react-router-dom";
 
 const MainComponent = () => {
   const [Params, setParams] = useState("");
   const [YoutubeURL, setYoutubeURL] = useState(false);
   const [SearchID, setSearchID] = useState(false);
   const [Flag, setFlag] = useState(false);
-
+  const navigate = useNavigate();
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (Params === "") {
@@ -42,6 +43,13 @@ const MainComponent = () => {
           onClick={(e) => SubmitHandler(e)}
         >
           Submit
+        </button>
+        <button
+          className="btn btn-primary"
+          style={{ marginLeft: "5px" }}
+          onClick={(e) => navigate("/AudioPlayer")}
+        >
+          Only Audio
         </button>
       </div>
       {SearchID && (

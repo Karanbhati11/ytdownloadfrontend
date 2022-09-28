@@ -5,3 +5,9 @@ export const resultAction = (results) => {
     payload: results,
   };
 };
+export const resultAudioPlayer = (results) => {
+  return {
+    type: ActionTypes.AUDIOPLAYER,
+    payload: results,
+  };
+};

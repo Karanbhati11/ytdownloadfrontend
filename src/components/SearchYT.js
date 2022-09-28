@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import DownloadComponent from "./DownloadComponent";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +69,7 @@ const SearchYT = ({ Keyword, para }) => {
 
   const CardClick = (e) => {
     setDownloader({ info: [] });
+    setLoading(true);
     // sessionStorage.setItem("Data", JSON.stringify(Results));
     axios
       .get(`${URL}?url=https://www.youtube.com/watch?v=${e.id.videoId}`)
