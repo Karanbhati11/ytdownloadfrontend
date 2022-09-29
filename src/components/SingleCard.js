@@ -1,9 +1,11 @@
 import React from "react";
 import DownloadComponent from "./DownloadComponent";
+import Navbar from "./Navbar";
 
 const SingleCard = ({ props }) => {
   return (
     <React.Fragment>
+      <Navbar props={"Youtube Download"} />
       <div
         style={{
           display: "flex",

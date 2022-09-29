@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resultAudioPlayer } from "../redux/actions/ResultActions";
 import ReactLoading from "react-loading";
+import Navbar from "./Navbar";
 
 const OnlyAudio = () => {
   const [params, setParams] = useState("");
@@ -64,15 +65,23 @@ const OnlyAudio = () => {
 
   return (
     <React.Fragment>
+      <Navbar props="Audio Player" />
       <div
-        style={{ display: "flex", justifyContent: "center", margin: "20px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "20px",
+          padding: "20px",
+        }}
       >
         <input
-          value={params}
-          placeholder="Search"
+          style={{ width: "50vw" }}
+          className="form-control"
           onChange={(e) => {
             setParams(e.target.value);
           }}
+          placeholder="Search or Enter URL"
+          value={params}
         />
         <button
           className="btn btn-dark"

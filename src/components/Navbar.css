@@ -1,0 +1,50 @@
+.nav-btn {
+    padding: 5px;
+    display: flex;
+    width: 200px;
+    justify-content: space-evenly;
+    margin-right: 100px;
+}
+
+.customnav {
+    display: flex;
+}
+
+h3 {
+    margin-left: 20px;
+    color: wheat;
+}
+
+@media only screen and (max-width: 768px) {
+
+    * {
+        margin: 0;
+    }
+
+    /* For mobile phones: */
+    .nav-btn {
+        margin: 0px;
+        display: flex;
+        padding: 0;
+        width: max-content;
+    }
+
+    .mybtn {
+        width: max-content;
+    }
+
+    h3 {
+        font-size: 16px;
+        width: max-content;
+        margin: 0;
+        color: wheat;
+    }
+
+    .customnav {
+        display: flex;
+        justify-content: space-around;
+        align-content: center;
+
+    }
+
+}

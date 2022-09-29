@@ -8,7 +8,35 @@
     outline: none;
 }
 
+.rhap_progress-indicator,
+.rhap_volume-indicator {
+    background-color: black;
+}
+
 .rhap_container svg {
     color: rgb(0, 0, 0);
 
+}
+
+.mycardinfo {
+    height: 200px;
+    width: 200px;
+    margin-top: 20px;
+    border-radius: 202px;
+
+}
+
+.rotating {
+    animation: mymove 15s infinite linear;
+
+}
+
+@keyframes mymove {
+    from {
+        transform: rotate(0deg);
+    }
+
+    from {
+        transform: rotate(360deg);
+    }
 }
