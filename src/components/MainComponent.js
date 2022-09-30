@@ -21,7 +21,7 @@ const MainComponent = () => {
   };
   return (
     <React.Fragment>
-      <Navbar props={"YT Downloader"} />
+      <Navbar name={"YT Downloader"} color={"primary"} />
       <div
         style={{
           display: "flex",

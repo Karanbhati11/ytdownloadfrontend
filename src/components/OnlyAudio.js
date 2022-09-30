@@ -65,7 +65,7 @@ const OnlyAudio = () => {
 
   return (
     <React.Fragment>
-      <Navbar props="Audio Player" />
+      <Navbar name="Audio Player" color={"dark"} />
       <div
         style={{
           display: "flex",
