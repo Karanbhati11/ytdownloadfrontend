@@ -9,7 +9,7 @@ const SingleCard = ({ props }) => {
   } else {
     return (
       <React.Fragment>
-        <Navbar props={"Youtube Download"} />
+        <Navbar name={"Youtube Download"} btn_name={"Saved"} color={"dark"} />
         <div
           style={{
             display: "flex",

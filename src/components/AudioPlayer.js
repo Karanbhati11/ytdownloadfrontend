@@ -2,20 +2,72 @@
 import React, { useState, useRef } from "react";
 import AudioPlayer1 from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "./AudioPlayer.css";
+import backendApi from "../apis/backendApi";
 import ErrorPage from "./ErrorPage";
 import Navbar from "./Navbar";
 const AudioPlayer = ({ props }) => {
   var key = 12;
   const player = useRef();
   const [rotate] = useState("rotating");
+  const [url, setUrl] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
+
+  backendApi.interceptors.request.use(
+    (config) => {
+      config.headers.authorization = `Bearer ${localStorage.getItem(
+        "jwtoken"
+      )}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const Upload = async (e) => {
+    backendApi.defaults.withCredentials = true;
+
+    try {
+      const rest = await backendApi.get("/playlist", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      setEmail(rest.data.root);
+      await backendApi.post("/addtoplaylist", {
+        email: rest.data.root,
+        videoID: props.Card.id.videoId,
+        ImageUrl: props.Card.snippet.thumbnails.medium.url,
+        AudioUrl: url,
+      });
+      // console.log(res.data.message);
+      toast.success("Added Successfully");
+    } catch (err) {
+      if (err.response.data.error === "Already Exist") {
+        toast.warn("Already Added");
+      } else {
+        navigate("/login");
+      }
+    }
+  };
 
   if (props === undefined) {
     return <ErrorPage path={"/AudioPlayer"} />;
   } else {
     return (
       <React.Fragment>
-        <Navbar name={"Audio Player"} color={"dark"} />
+        <Navbar name={"Audio Player"} btn_name={"Saved"} color={"dark"} />
+        <ToastContainer />
         <div
           style={{
             display: "flex",
@@ -40,7 +92,6 @@ const AudioPlayer = ({ props }) => {
                   style={{
                     width: "22rem",
                     display: "flex",
-                    // alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
@@ -56,8 +107,17 @@ const AudioPlayer = ({ props }) => {
                       className="adio"
                       // other props here
                       ref={player}
+                      onLoadedData={() => {
+                        setUrl(items.url);
+                      }}
                     />
                   </div>
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => Upload(e)}
+                  >
+                    Add
+                  </button>
                 </div>
               );
             }

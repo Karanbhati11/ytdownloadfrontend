@@ -21,7 +21,7 @@ const MainComponent = () => {
   };
   return (
     <React.Fragment>
-      <Navbar name={"YT Downloader"} color={"primary"} />
+      <Navbar name={"YT Downloader"} btn_name={"Saved"} color={"primary"} />
       <div
         style={{
           display: "flex",

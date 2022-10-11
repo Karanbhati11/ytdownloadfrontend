@@ -1,9 +1,9 @@
 .nav-btn {
     padding: 5px;
     display: flex;
-    width: 200px;
+    width: 300px;
     justify-content: space-evenly;
-    margin-right: 100px;
+    margin-right: 30px;
 }
 
 .customnav {

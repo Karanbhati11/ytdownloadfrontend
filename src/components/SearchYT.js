@@ -49,7 +49,6 @@ const SearchYT = ({ Keyword, para }) => {
     axios
       .get(`${SearchURL}=${MaxResults}&q=${Keyword}&type=video&key=${Key}`)
       .then((res) => {
-        // console.log(res.data.items);
         setResults(res.data.items);
         setLoading(false);
       })
@@ -70,14 +69,11 @@ const SearchYT = ({ Keyword, para }) => {
   const CardClick = (e) => {
     setDownloader({ info: [] });
     setLoading(true);
-    // sessionStorage.setItem("Data", JSON.stringify(Results));
     axios
       .get(`${URL}?url=https://www.youtube.com/watch?v=${e.id.videoId}`)
       .then((res) => {
-        // console.log(res.data);
         setDownloader(res.data);
         dispatch(resultAction({ MyData: res.data, Card: e }));
-        // setIsCardClicked(true);
         let path = `/cardclick`;
         navigate(path);
       });

@@ -11,3 +11,15 @@ export const resultAudioPlayer = (results) => {
     payload: results,
   };
 };
+export const resgistrationSuccess = (results) => {
+  return {
+    type: ActionTypes.REGISTRAIONSUCCESS,
+    payload: results,
+  };
+};
+export const fetchcredentials = (results) => {
+  return {
+    type: ActionTypes.CREDENTIALS,
+    payload: results,
+  };
+};
