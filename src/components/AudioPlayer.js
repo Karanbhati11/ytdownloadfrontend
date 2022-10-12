@@ -9,6 +9,7 @@ import backendApi from "../apis/backendApi";
 import ErrorPage from "./ErrorPage";
 import Navbar from "./Navbar";
 const AudioPlayer = ({ props }) => {
+  console.log(props);
   var key = 12;
   const player = useRef();
   const [rotate] = useState("rotating");
@@ -49,6 +50,7 @@ const AudioPlayer = ({ props }) => {
         videoID: props.Card.id.videoId,
         ImageUrl: props.Card.snippet.thumbnails.medium.url,
         AudioUrl: url,
+        Title: props.Card.snippet.title,
       });
       // console.log(res.data.message);
       toast.success("Added Successfully");

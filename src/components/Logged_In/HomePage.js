@@ -80,7 +80,28 @@ const HomePage = () => {
           <ReactLoading type="bars" color="#0d6efd" height={150} width={100} />
         </div>
       )}
-      {!playlistflag && <div>No Playlist</div>}
+      {!playlistflag && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h3 style={{ color: "black", marginTop: "50px" }}>Nothing Added</h3>
+          <button
+            className="btn btn-primary"
+            style={{ marginTop: "20px" }}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/AudioPlayer");
+            }}
+          >
+            Add
+          </button>
+        </div>
+      )}
       {playlistflag && <Pagination items={playlist} itemsPerPage={6} />}
     </React.Fragment>
   );

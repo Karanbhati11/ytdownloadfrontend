@@ -138,7 +138,7 @@ const Register = () => {
         </div>
       )}
       {!loading && (
-        <div className="lbody">
+        <div className="Rbody">
           <MainContainer>
             <WelcomeText>Welcome</WelcomeText>
             <InputContainer

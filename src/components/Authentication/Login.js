@@ -5,7 +5,6 @@ import "./Login.css";
 import styled from "styled-components";
 import Button from "../Small_Components/Button";
 import Input from "../Small_Components/Input";
-// import axios from "axios";
 import Navbar from "../Navbar";
 import backendApi from "../../apis/backendApi";
 

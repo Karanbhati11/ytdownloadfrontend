@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate";
 import AudioPlayer1 from "react-h5-audio-player";
 
 export default function Pagination({ items, itemsPerPage }) {
+  console.log(items);
   const PER_PAGE = itemsPerPage;
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -15,7 +16,7 @@ export default function Pagination({ items, itemsPerPage }) {
   const offset = currentPage * PER_PAGE;
   const currentPageData = items
     .slice(offset, offset + PER_PAGE)
-    .map(({ ImageUrl, AudioUrl }) => (
+    .map(({ ImageUrl, AudioUrl, Title }) => (
       <div
         key={Math.random() * 89898}
         className="card"
@@ -34,6 +35,10 @@ export default function Pagination({ items, itemsPerPage }) {
           style={{ alignSelf: "center" }}
         />
         <div className="card-body">
+          <p className="card-text" style={{ textAlign: "center" }}>
+            {Title}
+          </p>
+
           <AudioPlayer1
             src={AudioUrl}
             className="adio"
